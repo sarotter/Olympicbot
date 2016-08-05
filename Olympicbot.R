@@ -27,3 +27,16 @@ ranking <- data.frame("sport" = c("Swimming", "Athletics", "Gymnastics", "Basket
 
 schedule_df[indices,] -> relevant_games
 
+
+(published_table <- merge (relevant_games, ranking))
+(published_table <- published_table %>% group_by(Sport) %>% summarise(ranking = max(ranking)) %>% arrange(ranking))
+(published_table <- published_table[1:3,])
+
+#relevant_games %>% filter(Sport == published_table[1,1])
+
+#class(as.character(published_table[1,1]))
+
+try_table <- sapply(1:3, function(x) {
+  sport <- rbind(relevant_games %>% filter(Sport == as.character(published_table[x,1])))
+  return(sport[1,])
+})
