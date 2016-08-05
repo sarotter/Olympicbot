@@ -9,7 +9,7 @@ library(SnowballC)
 library(devtools)
 library(lubridate)
 #Store current date
-date <- format(as.Date("2016-08-17"),"%Y%m%d")
+date <- format(Sys.Date(),"%Y%m%d")
 
 #set url for day
 url = str_c("http://www.espn.com/olympics/summer/2016/schedule/_/date/", date, sep = "")
@@ -26,3 +26,4 @@ indices - 1 -> indices
 ranking <- data.frame("sport" = c("Swimming", "Athletics", "Gymnastics", "Basketball", "Soccer", "Volleyball", "Rowing", "Tennis", "Table Tennis"), "ranking" = 1:9)
 
 schedule_df[indices,] -> relevant_games
+
