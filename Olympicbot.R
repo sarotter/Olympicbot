@@ -41,3 +41,7 @@ tweet_table <- sapply(1:3, function(x) {
   return(sport[1,])
 })
 tweet_table <- t(tweet_table) %>% as.data.table(byrow=TRUE)
+
+tweet_table$`time (EST)` -> tweet_table$time
+tweet_table$`time (EST)` <- NULL
+str_c("Watch the ", tweet_table$Sport[1], " today at ", tweet_table$time[1])
