@@ -27,7 +27,6 @@ ranking <- data.frame("sport" = c("Swimming", "Athletics", "Gymnastics", "Basket
 
 schedule_df[indices,] -> relevant_games
 
-
 (published_table <- merge (relevant_games, ranking))
 (published_table <- published_table %>% group_by(Sport) %>% summarise(ranking = max(ranking)) %>% arrange(ranking))
 (published_table <- published_table[1:3,])
