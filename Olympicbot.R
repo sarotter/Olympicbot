@@ -26,4 +26,3 @@ indices - 1 -> indices
 ranking <- data.frame("sport" = c("Swimming", "Athletics", "Gymnastics", "Basketball", "Soccer", "Volleyball", "Rowing", "Tennis", "Table Tennis"), "ranking" = 1:9)
 
 schedule_df[indices,] -> relevant_games
-
