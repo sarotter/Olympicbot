@@ -1,4 +1,5 @@
 library(tm)
+library(twitteR)
 library(RCurl)
 library(XML)
 library(rvest)
@@ -12,7 +13,7 @@ library(reshape2)
 library(tidyr)
 library(dplyr)
 #Store current date
-date <- format(Sys.Date()+2,"%Y%m%d")
+date <- format(Sys.Date(),"%Y%m%d")
 
 #set url for day
 url = str_c("http://www.espn.com/olympics/summer/2016/schedule/_/date/", date, sep = "")
