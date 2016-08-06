@@ -14,10 +14,10 @@ library(tidyr)
 library(dplyr)
 library(data.table)
 #Store current date
-date <- format(Sys.Date(),"%Y%m%d")
+date <- format(Sys.Date() + 1,"%Y%m%d")
 
 #set url for day
-url = str_c("http://www.espn.com/olympics/summer/2016/schedule/_/date/20160808", date, sep = "")
+url = str_c("http://www.espn.com/olympics/summer/2016/schedule/_/date/", date, sep = "")
 
 #read in url and create the dataframe
 schedule <- read_html(url)
@@ -56,5 +56,5 @@ setup_twitter_oauth(api_key,api_secret,access_token,access_token_secret)
 greetings<-c("These are the must-watch games for today","Watch Now","Watch Live:","Best Games to Watch right now","Watch these Games")
 random<-sample(greetings, 1)
 
-tweet_mes <- str_c(random,": ", tweet_table$Sport[1], " today at ", tweet_table$time[1], "\n", tweet_table$Sport[2], " today at ", tweet_table$times[2], "\n", tweet_table$Sport[3], " today at ", tweet_table$times[3])
+tweet_mes <- str_c(random,":", "\n", tweet_table$Event[1], " today at ", tweet_table$time[1], "\n", tweet_table$Event[2], " today at ", tweet_table$time[2], " #Rio2016")
 tweet(tweet_mes)
