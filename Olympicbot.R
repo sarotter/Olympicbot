@@ -46,3 +46,14 @@ tweet_table <- t(tweet_table) %>% as.data.table(byrow=TRUE)
 tweet_table$`time (EST)` -> tweet_table$time
 tweet_table$`time (EST)` <- NULL
 str_c("Watch the ", tweet_table$Sport[1], " today at ", tweet_table$time[1])
+
+
+api_key <- "1Uj0WI9I5En6sfdDKIQf4s1NF"
+
+api_secret <- "wiLlk5sPulNlym83wF2u9YHfSAEwbk9sWVdJaERQPcDwLR9Zx1"
+
+access_token <- "761956823482114048-k20LounPHDjSADagfJ77OdZtUUQe3RU"
+
+access_token_secret <- "V24K29PRSrfqdcUC4DD6OJ4tbTsym2T3PJdo9BFoHQjGT"
+
+setup_twitter_oauth(api_key,api_secret,access_token,access_token_secret)
