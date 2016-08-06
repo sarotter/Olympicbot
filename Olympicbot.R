@@ -35,7 +35,6 @@ ranking <- data.frame("Sport" = c("Swimming", "Athletics", "Gymnastics", "Basket
 (published_table <- published_table %>% group_by(Sport) %>% summarise(ranking = max(ranking)) %>% arrange(ranking))
 (published_table <- published_table[1:3,])
 
-#relevant_games %>% filter(Sport == published_table[1,1])
 
 tweet_table <- sapply(1:3, function(x) {
   sport <- relevant_games %>% filter(Sport == as.character(published_table[x,1]))
