@@ -1,5 +1,18 @@
 # Medal count
-library(readr)
+library(tm)
+library(twitteR)
+library(RCurl)
+library(XML)
+library(rvest)
+library(RSelenium)
+library(stringr)
+library(stringi)
+library(SnowballC)
+library(devtools)
+library(lubridate)
+library(reshape2)
+library(tidyr)
+library(dplyr)
 
 #read the url
 url = "http://www.espn.com/olympics/summer/2016/medals"
