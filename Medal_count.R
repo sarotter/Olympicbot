@@ -1,4 +1,4 @@
-# Medal count
+# Medal count end of today
 library(tm)
 library(twitteR)
 library(RCurl)
