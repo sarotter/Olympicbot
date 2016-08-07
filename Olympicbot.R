@@ -14,7 +14,7 @@ library(tidyr)
 library(dplyr)
 library(data.table)
 #Store current date
-date <- format(Sys.Date() + 1,"%Y%m%d")
+date <- format(Sys.Date(),"%Y%m%d")
 
 #set url for day
 url = str_c("http://www.espn.com/olympics/summer/2016/schedule/_/date/", date, sep = "")
@@ -24,22 +24,27 @@ schedule <- read_html(url)
 schedule_df <- schedule %>% html_nodes("table") %>% .[[1]] %>% html_table(trim = FALSE)
 schedule_df[,c(1,5)] <- NULL
 
-#Set search critera for best games: first medal games then our rankings
-schedule %>% html_nodes("table") %>% .[[1]]  %>% html_nodes("tr") -> medal_games
+#Set search critera for best games
+medal_games <- schedule %>% html_nodes("table") %>% .[[1]]  %>% html_nodes("tr") 
+
+# get the indices of the medal games in the data frame
 indices <- grep('class=\"olympics-medal gold\"', medal_games)
-indices - 1 -> indices
-ranking <- data.frame("Sport" = c("Swimming", "Athletics", "Gymnastics", "Basketball", "Soccer", "Volleyball", "Rowing", "Tennis", "Table Tennis", "Weightlifting", "Shooting", "Cycling - Road","Shooting", "Diving", "Judo", "Archery", "Fencing"), "ranking" = 1:17)
+indices <- indices - 1 
 
 # only take medal games in each day
 relevant_games <- schedule_df[indices,] 
 
-# selecet 3 most important games based on our ranking of how popular the sports are
+# Rank sports based on popularity
+ranking <- data.frame("Sport" = c("Swimming", "Athletics", "Gymnastics", "Basketball", "Soccer", "Volleyball", "Rowing", "Tennis", "Table Tennis", "Weightlifting", "Shooting", "Cycling - Road","Shooting", "Diving", "Judo", "Archery", "Fencing"), "ranking" = 1:17)
+
+
+# selecet 3 most important games based on our ranking of sports' popularity
 (published_table <- merge (relevant_games, ranking))
 (published_table <- published_table %>% group_by(Sport) %>% summarise(ranking = max(ranking)) %>% arrange(ranking))
 (published_table <- published_table[1:3,])
 
 
-# Format the table 
+# Format the table t
 tweet_table <- sapply(1:3, function(x) {
   sport <- relevant_games %>% filter(Sport == as.character(published_table[x,1]))
   return(sport[1,])
@@ -61,4 +66,9 @@ random<-sample(greetings, 1)
 
 # generate the tweet
 tweet_mes <- str_c(random,":", "\n", tweet_table$Event[1], " today at ", tweet_table$time[1], "\n", tweet_table$Event[2], " today at ", tweet_table$time[2], " #Rio2016")
+
+# If more than 140 characters
+if (str_length(tweet_mes) > 140) {
+  tweet_mes <- str_c(random,":", "\n", tweet_table$Sport[1], " today at ", tweet_table$time[1], "\n", tweet_table$Sport[2], " today at ", tweet_table$time[2], "\n", tweet_table$Sport[3], " today at ", tweet_table$time[3], " #Rio2016")
+}
 tweet(tweet_mes)
