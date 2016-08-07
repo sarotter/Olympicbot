@@ -61,7 +61,7 @@ access_token_secret <- "V24K29PRSrfqdcUC4DD6OJ4tbTsym2T3PJdo9BFoHQjGT"
 setup_twitter_oauth(api_key,api_secret,access_token,access_token_secret)
 
 # random greetings generator
-greetings<-c("These are the must-watch games for today","Watch Now","Watch Live","Best Games to Watch right now","Watch these Games", "You don't wanna miss these amazing events", "grab few beers and get ready")
+greetings<-c("Must-Watch games","Today's Games","Best Games to Watch today","Watch these Games", "You don't wanna miss these amazing events", "Grab a few beers and get ready")
 random<-sample(greetings, 1)
 
 # generate the tweet
@@ -72,3 +72,4 @@ if (str_length(tweet_mes) > 140) {
   tweet_mes <- str_c(random,":", "\n", tweet_table$Sport[1], " today at ", tweet_table$time[1], "\n", tweet_table$Sport[2], " today at ", tweet_table$time[2], "\n", tweet_table$Sport[3], " today at ", tweet_table$time[3], " #Rio2016")
 }
 tweet(tweet_mes)
+
