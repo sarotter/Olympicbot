@@ -30,31 +30,35 @@ indices <- grep('class=\"olympics-medal gold\"', medal_games)
 indices - 1 -> indices
 ranking <- data.frame("Sport" = c("Swimming", "Athletics", "Gymnastics", "Basketball", "Soccer", "Volleyball", "Rowing", "Tennis", "Table Tennis", "Weightlifting", "Shooting", "Cycling - Road","Shooting", "Diving", "Judo", "Archery", "Fencing"), "ranking" = 1:17)
 
-(schedule_df[indices,] -> relevant_games)
+# only take medal games in each day
+relevant_games <- schedule_df[indices,] 
 
+# selecet 3 most important games based on our ranking of how popular the sports are
 (published_table <- merge (relevant_games, ranking))
 (published_table <- published_table %>% group_by(Sport) %>% summarise(ranking = max(ranking)) %>% arrange(ranking))
 (published_table <- published_table[1:3,])
 
 
+# Format the table 
 tweet_table <- sapply(1:3, function(x) {
   sport <- relevant_games %>% filter(Sport == as.character(published_table[x,1]))
   return(sport[1,])
 })
 tweet_table <- t(tweet_table) %>% as.data.table(byrow=TRUE)
-
-
 tweet_table$`time (EST)` -> tweet_table$time
 tweet_table$`time (EST)` <- NULL
 
+# set up the correct twitter account
 api_key <- "1Uj0WI9I5En6sfdDKIQf4s1NF"
 api_secret <- "wiLlk5sPulNlym83wF2u9YHfSAEwbk9sWVdJaERQPcDwLR9Zx1"
 access_token <- "761956823482114048-k20LounPHDjSADagfJ77OdZtUUQe3RU"
 access_token_secret <- "V24K29PRSrfqdcUC4DD6OJ4tbTsym2T3PJdo9BFoHQjGT"
 setup_twitter_oauth(api_key,api_secret,access_token,access_token_secret)
 
-greetings<-c("These are the must-watch games for today","Watch Now","Watch Live:","Best Games to Watch right now","Watch these Games")
+# random greetings generator
+greetings<-c("These are the must-watch games for today","Watch Now","Watch Live","Best Games to Watch right now","Watch these Games", "You don't wanna miss these amazing events", "grab few beers and get ready")
 random<-sample(greetings, 1)
 
+# generate the tweet
 tweet_mes <- str_c(random,":", "\n", tweet_table$Event[1], " today at ", tweet_table$time[1], "\n", tweet_table$Event[2], " today at ", tweet_table$time[2], " #Rio2016")
 tweet(tweet_mes)
