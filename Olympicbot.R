@@ -71,7 +71,7 @@ sapply(1:5, function(x) {
     tweet_mes <- str_c(random,":", "\n")
   }
   hashtag <- str_c("#",tweet_table$Sport[x])
-  tweet_mes <- str_c(tweet_mes, tweet_table$Sport[x], ", ", tweet_table$Event[x], ", at: ", tweet_table$time[x], " ", hashtag, " #Rio2016", " #olympics")
+  tweet_mes <- str_c(tweet_mes, tweet_table$Sport[x], ", ", tweet_table$Event[x], ", at: ", tweet_table$time[x], " SAST ", hashtag, " #Rio2016", " #olympics")
   tweet(tweet_mes)
   tweet_mes <- NULL
 })
