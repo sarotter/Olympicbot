@@ -41,11 +41,11 @@ ranking <- data.frame("Sport" = c("Swimming", "Athletics", "Gymnastics", "Basket
 # selecet 3 most important games based on our ranking of sports' popularity
 (published_table <- merge (relevant_games, ranking))
 (published_table <- published_table %>% group_by(Sport) %>% summarise(ranking = max(ranking)) %>% arrange(ranking))
-(published_table <- published_table[1:3,])
+(published_table <- published_table[1:5,])
 
 
 # Format the table t
-tweet_table <- sapply(1:3, function(x) {
+tweet_table <- sapply(1:5, function(x) {
   sport <- relevant_games %>% filter(Sport == as.character(published_table[x,1]))
   return(sport[1,])
 })
@@ -64,12 +64,25 @@ setup_twitter_oauth(api_key,api_secret,access_token,access_token_secret)
 greetings<-c("Must-Watch games","Today's Games","Best Games to Watch today","Watch these Games", "You don't wanna miss these amazing events", "Grab a few beers and get ready")
 random<-sample(greetings, 1)
 
-# generate the tweet
-tweet_mes <- str_c(random,":", "\n", tweet_table$Event[1], " today at ", tweet_table$time[1], "\n", tweet_table$Event[2], " today at ", tweet_table$time[2], " #Rio2016")
+# generate 5 tweets
+tweet_mes <- ""
+sapply(1:5, function(x) {
+  if (x == 1) {
+    tweet_mes <- str_c(random,":", "\n")
+  }
+  hashtag <- str_c("#",tweet_table$Sport[x])
+  tweet_mes <- str_c(tweet_mes, tweet_table$Sport[x], ", ", tweet_table$Event[x], ", at: ", tweet_table$time[x], " ", hashtag, " #Rio2016", " #olympics")
+  tweet(tweet_mes)
+  tweet_mes <- NULL
+})
+
+
+
 
 # If more than 140 characters
+
+
 if (str_length(tweet_mes) > 140) {
   tweet_mes <- str_c(random,":", "\n", tweet_table$Sport[1], " today at ", tweet_table$time[1], "\n", tweet_table$Sport[2], " today at ", tweet_table$time[2], "\n", tweet_table$Sport[3], " today at ", tweet_table$time[3], " #Rio2016")
 }
-tweet(tweet_mes)
 
