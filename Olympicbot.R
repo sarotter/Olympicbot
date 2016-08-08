@@ -75,14 +75,3 @@ sapply(1:5, function(x) {
   tweet(tweet_mes)
   tweet_mes <- NULL
 })
-
-
-
-
-# If more than 140 characters
-
-
-if (str_length(tweet_mes) > 140) {
-  tweet_mes <- str_c(random,":", "\n", tweet_table$Sport[1], " today at ", tweet_table$time[1], "\n", tweet_table$Sport[2], " today at ", tweet_table$time[2], "\n", tweet_table$Sport[3], " today at ", tweet_table$time[3], " #Rio2016")
-}
-
