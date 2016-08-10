@@ -21,7 +21,7 @@ url = "http://www.espn.com/olympics/summer/2016/medals"
 table <- read_html(url)
 table_df <- table %>% html_nodes("table") %>% .[[8]] %>% html_table(trim = FALSE)
 
-#only take the top 3 teams
+#only take the top 3 teams. 
 top_teams <- table_df[1:3,]
 
 # Set-up tweet

@@ -64,7 +64,7 @@ setup_twitter_oauth(api_key,api_secret,access_token,access_token_secret)
 greetings<-c("Must-Watch games","Today's Games","Best Games to Watch today","Watch these Games", "You don't wanna miss these amazing events", "Grab a few beers and get ready")
 random<-sample(greetings, 1)
 
-# generate 5 tweets
+# generate 5 tweets.
 tweet_mes <- ""
 sapply(1:5, function(x) {
   if (x == 1) {
